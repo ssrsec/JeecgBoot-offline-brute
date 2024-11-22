@@ -40,6 +40,7 @@ public class JeecgBoot_offline_brute {
      * @return Key PBE算法密钥
      */
     private static Key getPbeKey(String password) {
+
         // 实例化使用的算法
         SecretKeyFactory keyFactory;
         SecretKey secretKey = null;
@@ -50,8 +51,7 @@ public class JeecgBoot_offline_brute {
             // 生成密钥
             secretKey = keyFactory.generateSecret(keySpec);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         }
 
         return secretKey;
@@ -83,7 +83,7 @@ public class JeecgBoot_offline_brute {
         int totalAttempts = userList.size() * passwords.size();
         int currentAttempt = 0;
         // 更新进度条
-        System.out.printf("开始离线爆破，总数: %d", totalAttempts);
+        System.out.printf("开始离线爆破，总数: %d\n", totalAttempts);
 
         for (Map<String, String> user : userList) {
             String username = user.get("username");
