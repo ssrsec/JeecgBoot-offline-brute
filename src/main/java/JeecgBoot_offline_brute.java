@@ -103,14 +103,31 @@ public class JeecgBoot_offline_brute {
     }
 
     public static void main(String[] args) throws IOException {
-        String jsonData = new String(Files.readAllBytes(Paths.get("data.json")));
-        List<String> passwords = Files.readAllLines(Paths.get("pass.txt"));
+        try {
+            Path jsonPath = Paths.get("data.json");
+            Path passPath = Paths.get("pass.txt");
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<Map<String, String>> userList = objectMapper.readValue(jsonData, new TypeReference<List<Map<String, String>>>() {
-        });
+            if (!Files.exists(jsonPath)) {
+                System.out.println("data.json 文件不存在");
+                return;
+            }
 
-        brute(userList, passwords);
+            if (!Files.exists(passPath)) {
+                System.out.println("pass.txt 文件不存在");
+                return;
+            }
+
+            String jsonData = new String(Files.readAllBytes(jsonPath));
+            List<String> passwords = Files.readAllLines(passPath);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<Map<String, String>> userList = objectMapper.readValue(jsonData, new TypeReference<List<Map<String, String>>>() {});
+
+            brute(userList, passwords);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
